@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03</title>
+</head>
+<body>
+    <div>
+        <p id="q1">Pregunta 1</p>
+        <button onclick="changeColor(this,'green')">Verdadero</button><button onclick="changeColor(this,'red')">Falso</button>
+    </div>
+    <div>
+        <p id="q2">Pregunta 2</p>
+        <button onclick="changeColor(this,'green')">Verdadero</button><button onclick="changeColor(this,'red')">Falso</button>
+    </div>
+    <div>
+        <p id="q3">Pregunta 3</p>
+        <button onclick="changeColor(this,'green')">Verdadero</button><button onclick="changeColor(this,'red')">Falso</button>
+    </div>
+    <div>
+        <p id="q4">Pregunta 4</p>
+        <button onclick="changeColor(this,'green')">Verdadero</button><button onclick="changeColor(this,'red')">Falso</button>
+    </div>
+    <div>
+        <p id="q5">Pregunta 5</p>
+        <button onclick="changeColor(this,'green')">Verdadero</button><button onclick="changeColor(this,'red')">Falso</button>
+    </div>
+    <div>
+        <p id="q6">Pregunta 6</p>
+        <button onclick="changeColor(this,'green')">Verdadero</button><button onclick="changeColor(this,'red')">Falso</button>
+    </div>
+    <div>
+        <p id="q7">Pregunta 7</p>
+        <button onclick="changeColor(this,'green')">Verdadero</button><button onclick="changeColor(this,'red')">Falso</button>
+    </div>
+
+    <script>
+        function changeColor(button, color) {
+            const p = button.parentElement.querySelector("p");
+            p.style.color = color;
+        }
+    </script>
+</body>
+</html>

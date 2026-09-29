@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>02</title>
 </head>
 <body>
     <h1>Cambio de imágenes con JavaScript</h1>
-    <img id="image" onclick="cambiaPic()" src="/assets/Docker-Emblem.png" alt="Docker-Emblem.png" width="100">
-    <p>Haz click sobre las teclas para cambiarlas.</p>
+    <img id="image" onclick="cambiaPic()" src="/assets/Docker-Emblem.png" alt="Docker-Emblem.png" height="100">
+    <p>Haz click sobre la imagen para cambiarla.</p>
 
     <script>
+        const carousel = ["Java-Logo.png","Html-Logo.webp","JS-Logo.png","Docker-Emblem.png"];
+
+        let carouselIndex = 0;
+        
         function cambiaPic() {
-            var image = document.getElementById("image");
-            if (image.src.match("Docker")) {
-                image.src = "/assets/Java-Logo.png";
-            } else {
-                image.src = "/assets/Docker-Emblem.png";
-            }
+            const image = document.getElementById("image");
+            if (carouselIndex > carousel.length - 1) carouselIndex = 0;
+            image.src = "/assets/" + carousel[carouselIndex];
+            carouselIndex++;
         }
     </script>
 </body>
