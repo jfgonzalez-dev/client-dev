@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="title">Título Original</h1>
+    <p id="paragraph">Este es el texto inicial del párrafo.</p>
+    <div id="buttons">
+        <button onclick="cambiarTexto()">Cambiar Texto</button>
+        <button onclick="cambiarEstilo()">Cambiar Estilos CSS</button>
+    </div>
+
+    <script>
+        function cambiarTexto() {
+            document.getElementById("title").innerHTML = "¡Título Modificado!";
+            document.getElementById("paragraph").innerHTML = "Texto cambiado.";
+        }
+
+        function cambiarEstilo() {
+            var paragraph = document.getElementById("paragraph");
+            paragraph.style.fontSize = "25px"
+            paragraph.style.fontWeight = "bold"
+            paragraph.style.color = "red";
+        }
+
+    </script>
+</body>
+</html>
