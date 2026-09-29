@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Cambio de imágenes con JavaScript</h1>
+    <img id="image" onclick="cambiaPic()" src="/assets/Docker-Emblem.png" alt="Docker-Emblem.png" width="100">
+    <p>Haz click sobre las teclas para cambiarlas.</p>
+
+    <script>
+        function cambiaPic() {
+            var image = document.getElementById("image");
+            if (image.src.match("Docker")) {
+                image.src = "/assets/Java-Logo.png";
+            } else {
+                image.src = "/assets/Docker-Emblem.png";
+            }
+        }
+    </script>
+</body>
+</html>

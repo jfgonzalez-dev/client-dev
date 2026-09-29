@@ -1,16 +1,16 @@
 <html>
 <body>
     <h1>Cambio de imágenes con JavaScript</h1>
-    <img id="myFPImage" onclick="cambiaPic()" src="assets/Docker-Emblem.png" alt="Docker-Emblem.png" width="100">
+    <img id="myFPImage" onclick="cambiaPic()" src="/assets/Docker-Emblem.png" alt="Docker-Emblem.png" width="100">
     <p>Haz click sobre las teclas para cambiarlas.</p>
 
     <script>
         function cambiaPic() {
             var image = document.getElementById("myFPImage");
             if (image.src.match("Docker")) {
-                image.src = "assets/Java-Logo.png";
+                image.src = "/assets/Java-Logo.png";
             } else {
-                image.src = "assets/Docker-Emblem.png";
+                image.src = "/assets/Docker-Emblem.png";
             }
         }
     </script>
