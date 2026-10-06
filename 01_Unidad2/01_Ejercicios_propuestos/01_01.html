@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let circ = {r:5,a:null,l:null};
+
+        function calcAreaAndLenght(c) {
+            c.a = Math.PI * c.r ** 2;
+            c.l = 2 * Math.PI * c.r;
+        }
+
+        calcAreaAndLenght(circ);
+
+        console.log(circ);
+    </script>
+</body>
+</html>

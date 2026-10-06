@@ -20,5 +20,8 @@
 ### Ejercicios de clase
 - [Conflicto entre ámbitos en JavaScript](01_Unidad2/00_Ejercicios_de_clase/00_ConflictoScopesJS.html)
 ### Ejercicios propuestos
-- [Ejercicio 1](01_Unidad2/01_Ejercicios_propuestos/02-1.html)
-- [Ejercicio 2](01_Unidad2/01_Ejercicios_propuestos/02-2.html)
+- [Ejercicio 2.1](01_Unidad2/01_Ejercicios_propuestos/00_02-1.html)
+- [Ejercicio 2.2](01_Unidad2/01_Ejercicios_propuestos/00_02-2.html)
+- [Ejercicio 1](/01_Unidad2/01_Ejercicios_propuestos/01_01.html)
+- [Ejercicio 2](/01_Unidad2/01_Ejercicios_propuestos/01_02.html)
+- [Ejercicio 3](/01_Unidad2/01_Ejercicios_propuestos/01_03.html)

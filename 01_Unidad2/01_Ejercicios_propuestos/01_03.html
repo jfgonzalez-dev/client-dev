@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /***
+         * El parseo implícito sucede de izquierda a derecha por pasos
+         * str        + int = str         -> str         + int = str
+         * "Ronaldo " + 5   = "Ronaldo 5" -> "Ronaldo 5" + 5   = "Ronaldo 55"
+         */
+        var dato = "Ronaldo " + 5 + 5;
+        console.log(dato);
+        /***
+         * Y al revés igual
+         * int + int = int -> int + str         = str
+         * 5   + 5   = 10  -> 10  + " Ronaldo " = "10 Ronaldo "
+         */
+        var dato = 5 + 5 + " Ronaldo ";
+        console.log(dato);
+    </script>
+</body>
+</html>
