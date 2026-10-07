@@ -19,6 +19,7 @@
 ## Unidad 2
 ### Ejercicios de clase
 - [Conflicto entre ámbitos en JavaScript](01_Unidad2/00_Ejercicios_de_clase/00_ConflictoScopesJS.html)
+- [Event Listeners en JavaScript](01_Unidad2/00_Ejercicios_de_clase/01_EventListenersJS.html)
 ### Ejercicios propuestos
 - [Ejercicio 2.1](01_Unidad2/01_Ejercicios_propuestos/00_02-1.html)
 - [Ejercicio 2.2](01_Unidad2/01_Ejercicios_propuestos/00_02-2.html)

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Tema 2 - Eventos con 'on...'</title>
+</head>
+<body>
+
+  <h2>Eventos con prefijo 'on'</h2>
+
+  <!-- ========================================== -->
+  <!-- EVENTOS DE RATÓN                           -->
+  <!-- ========================================== -->
+  
+  <!-- Ratón 1: onclick -->
+  <button id="onclick">1. Hacer clic aquí</button>
+
+  <br><br>
+
+  <!-- Ratón 2: onmouseover -->
+  <div id="onmouseover" style="background: #e2e8f0; padding: 10px; width: 250px;">
+    2. Pasa el ratón por encima de esta caja
+  </div>
+
+  <hr>
+
+  <!-- ========================================== -->
+  <!-- EVENTOS DE TEXTO / TECLADO                 -->
+  <!-- ========================================== -->
+
+  <!-- Texto 1: oninput (se activa mientras el usuario escribe) -->
+  <label>3. Escribe tu nombre (oninput):</label><br>
+  <input type="text" id="oninput">
+
+  <br><br>
+
+  <!-- Texto 2: onkeyup (se activa al soltar una tecla) -->
+  <label>4. Escribe un texto (onkeyup):</label><br>
+  <input type="text" id="onkeyup">
+
+  <!-- Salida de texto en pantalla -->
+  <p id="salida"></p>
+
+  <script>
+      
+    // Funciones asociadas a los eventos de ratón
+    const idSalida = "salida";
+    const idClick = "onclick";
+    function alHacerClic() {
+      document.getElementById(idSalida).innerText = "¡Has hecho clic en el botón!";
+    }
+    document.getElementById("onclick").addEventListener("click",alHacerClic);
+
+    const idOver = "onmouseover";
+    function alPasarElRaton() {
+      document.getElementById(idOver).innerText = "¡El ratón está sobre la caja!";
+    }
+    document.getElementById(idOver).addEventListener("mouseover",alPasarElRaton);
+
+    // Funciones asociadas a los eventos de texto
+    const idInput = "oninput"; 
+    function alEscribirTexto(valor) {
+      document.getElementById(idSalida).innerText = "Nombre en tiempo real: " + valor.target.value;
+    }
+    document.getElementById(idInput).addEventListener("input",alEscribirTexto);
+
+    const idKeyUp = "onkeyup"
+    function alSoltarTecla(valor) {
+      console.log("Número de caracteres (Consola F12): " + valor.target.value.length);
+    }
+    document.getElementById(idKeyUp).addEventListener("keyup",alSoltarTecla)
+  </script>
+
+</body>
+</html>
