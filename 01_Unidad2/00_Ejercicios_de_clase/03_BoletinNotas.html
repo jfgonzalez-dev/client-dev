@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="03_BoletinNotas.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+    <h1>Boletón de notas de la clase</h1>
+    <a href="#">Notas</a> | <a href="#">Consultas</a>
+    <div>
+        <h2>Notas por trimestre</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Alumno</th>
+                    <th>1T</th>
+                    <th>2T</th>
+                    <th>3T</th>
+                    <th>Media</th>
+                    <th>Calificación</th>
+                </tr>
+            </thead>
+            <tbody id="alumnosTable"></tbody>
+        </table>
+    </div>
+    <div>
+        <h2>Añadir alumno</h2>
+        <form action="#" id="alumnoForm">
+            <label for="nombre">Nombre</label> <input id="nombre" type="text">
+            <label for="1t">1T:</label><input id="1t" type="text">
+            <label for="2t">2T:</label><input id="2t" type="text">
+            <label for="3t">3T:</label><input id="3t" type="text">
+            <button type="submit">Añadir</button>
+        </form>
+        <button id="reset">Volver a los datos iniciales</button>
+        <p id="output"></p>
+    </div>
+</body>
+</html>
