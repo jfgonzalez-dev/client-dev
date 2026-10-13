@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <script src="03_BoletinNotas.js"></script>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="./03_BoletinNotas.css">
+    
+    <!--
+    Uso defer para que el script se ejecute solo cuando se haya terminado de cargar el html
+    -->
+    <script src="03_BoletinNotas.js" defer></script>
 
-    <title>Document</title>
+    <title>Boletín Notas</title>
 </head>
 <body>
-    <h1>Boletón de notas de la clase</h1>
+    <h1>Boletín de notas de la clase</h1>
     <a href="#">Notas</a> | <a href="#">Consultas</a>
     <div>
         <h2>Notas por trimestre</h2>
@@ -24,19 +30,19 @@
                     <th>Calificación</th>
                 </tr>
             </thead>
-            <tbody id="alumnosTable"></tbody>
+            <tbody id="studentsTable"></tbody>
         </table>
     </div>
     <div>
         <h2>Añadir alumno</h2>
-        <form action="#" id="alumnoForm">
-            <label for="nombre">Nombre</label> <input id="nombre" type="text">
-            <label for="1t">1T:</label><input id="1t" type="text">
-            <label for="2t">2T:</label><input id="2t" type="text">
-            <label for="3t">3T:</label><input id="3t" type="text">
+        <form action="#" id="studentForm">
+            <label for="name">Nombre</label> <input id="name" type="text" required>
+            <label for="t1">1T:</label><input id="t1" type="number" min="0" max="10" required>
+            <label for="t2">2T:</label><input id="t2" type="number" min="0" max="10" required>
+            <label for="t3">3T:</label><input id="t3" type="number" min="0" max="10" required>
             <button type="submit">Añadir</button>
         </form>
-        <button id="reset">Volver a los datos iniciales</button>
+        <button id="resetBtn">Volver a los datos iniciales</button>
         <p id="output"></p>
     </div>
 </body>
