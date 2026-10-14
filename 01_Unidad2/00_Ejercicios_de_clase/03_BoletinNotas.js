@@ -1,4 +1,4 @@
-// ## Config & Initial Data ##
+// ## Configuración y datos ##
 /**
  * Array de estudiantes por defecto
  */
@@ -23,7 +23,7 @@ const GRADE_THRESHOLD = [
     { limit: 11, label: "Sobresaliente" },
 ];
 
-// ## State Management ##
+// ## Gestión de estudiantes ##
 /**
  * Gestor de estudiantes. Lo uso para usar encapsulación y relegar le responsabilidad
  * del reset, el add o el getAll a esta clase en lugar de llamarlos en otras funciones
@@ -61,18 +61,40 @@ class StudentsManager {
     getAll() {
         return this.activeData;
     }
+
+    /**
+     * Devuelve el número de alumnos
+     * @returns 
+     */
+    count() {
+        return this.activeData.length;
+    }
 }
 
 // Instancio studentsManager. Lo usaré para gestionar activeData, es decir, la el array activo
 // de estudiantes.
 const studentsManager = new StudentsManager(STUDENTS);
 
-// ## DOM Element Caching
+// ## DOM Cache
 const tbody = document.getElementById("studentsTable");
 const studentForm = document.getElementById("studentForm");
 const resetBtn = document.getElementById("resetBtn");
+const outputField = document.getElementById("output");
+const countBtn = document.getElementById("countPassed");
+const bestGradeStudentBtn = document.getElementById("getBestGrade");
+const avgTrimestreSelect = document.getElementById("trimestreSelect");
+const avgTrimestreBtn = document.getElementById("avgTrimestre");
 
-// ## Utility Functions ##
+// ## Utilidades ##
+/**
+ * Calcula la media de notas de un alumno
+ * @param {} student 
+ * @returns 
+ */
+function getGradeAverage(student) {
+    return ((student.t1 + student.t2 + student.t3) / 3);
+}
+
 /**
  * Función para obtener la columna "Calificación" en función de la nota media del alumno (avg)
  * @param {*} avg 
@@ -94,7 +116,7 @@ function createStudentRow(student) {
     const { name, t1, t2, t3 } = student;
 
     // Calculo la media de las 3 evaluaciones
-    const avg = (t1 + t2 + t3) / 3;
+    const avg = getGradeAverage(student);
 
     // Genero los datos de una fila
     const rowData = [name, t1, t2, t3, avg.toFixed(2), getGradeLabel(avg)]
@@ -115,7 +137,41 @@ function createStudentRow(student) {
     return tr;
 }
 
-// ## Core UI ##
+/**
+ * Cuenta los alumnos aprobados
+ * @returns 
+ */
+function countPass() {
+    return studentsManager.getAll().filter(s => {
+        return getGradeAverage(s) >= 5;
+    }).length;
+}
+
+/**
+ * Obtiene la mejor nota de la clase
+ */
+function getBestGradeStudent() {
+    const students = studentsManager.getAll();
+    return students.reduce((best, current) =>
+        getGradeAverage(best) > getGradeAverage(current) ? best : current,
+        students[0]
+    );
+}
+
+/**
+ * Calcula la media de nota de un trimestre
+ */
+function getAvgTrimestre() {
+    const students = studentsManager.getAll();
+    const tri = avgTrimestreSelect.value
+    
+    let sum = 0;
+    students.forEach(s => {sum += s[tri]});
+
+    return sum / students.length;
+}
+
+// ## Funciones principales ##
 /**
  * Añade a la tabla del html el tbody con los alumnos
  */
@@ -166,9 +222,53 @@ function processStudentForm(e) {
     studentForm.reset();
 }
 
+/**
+ * Imprime en la salida los alumnos aprobados
+ */
+function outputCountPass() {
+    const pass = countPass();
+    const fail = studentsManager.getAll().length - pass;
+    
+    const passElement = document.createElement("p");
+    passElement.textContent = `Aprobados: ${pass}`;
+    
+    const failElement = document.createElement("p");
+    failElement.textContent = `Suspensos: ${fail}`;
+    
+    outputField.replaceChildren();
+    outputField.appendChild(passElement);
+    outputField.appendChild(failElement);
+}
+
+/**
+ * Imprime en la salida el alumno con mejor nota media
+ */
+function outputBestGradeStudent() {
+    const bestStudent = getBestGradeStudent();
+
+    const bestGradeStudentElement = document.createElement("p");
+    bestGradeStudentElement.textContent = `El mejor alumno es ${bestStudent.name.trim()}. T1: ${bestStudent.t1}, T2: ${bestStudent.t2}, T3: ${bestStudent.t3}, Final: ${getGradeAverage(bestStudent).toFixed(2)}`;
+
+    outputField.replaceChildren();
+    outputField.appendChild(bestGradeStudentElement);
+}
+
+/**
+ * Imprime la media del trimestre
+ */
+function outputAvgTrimestre() {
+    const avg = getAvgTrimestre().toFixed(2);
+
+    const avgTrimestreElement = document.createElement("p");
+    avgTrimestreElement.textContent = `La media del trimestre es ${avg}.`
+
+    outputField.replaceChildren();
+    outputField.appendChild(avgTrimestreElement);
+}
+
 // ## Executions & Listeners ##
 // Imprime la tabla completa usando el array inicial
-printStudentsTbody()
+printStudentsTbody();
 
 // Añade un listener al botón "Añadir" que llame a la función que procesa el formulario
 studentForm.addEventListener("submit", processStudentForm);
@@ -180,4 +280,6 @@ resetBtn.addEventListener("click", () => {
     printStudentsTbody();
 });
 
-
+countBtn.addEventListener("click", outputCountPass);
+bestGradeStudentBtn.addEventListener("click", outputBestGradeStudent);
+avgTrimestreBtn.addEventListener("click", outputAvgTrimestre);
