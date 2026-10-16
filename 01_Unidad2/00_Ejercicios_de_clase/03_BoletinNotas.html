@@ -1,67 +1,439 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
-    <link rel="stylesheet" href="./03_BoletinNotas.css">
-    
-    <!--
-    Uso defer para que el script se ejecute solo cuando se haya terminado de cargar el html
-    -->
-    <script src="03_BoletinNotas.js" defer></script>
 
     <title>Boletín Notas</title>
+
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            background: #f1f5f9;
+            color: #0f172a;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 { text-align: center; }
+        .panel {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        input { padding: 6px; font-size: 15px; border: 1px solid #94a3b8; border-radius: 6px; }
+        input[type="number"] { width: 60px; }
+        button {
+            padding: 7px 12px;
+            margin: 4px 2px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            background: #1d4ed8;
+            color: white;
+        }
+        button:hover { background: #1e40af; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: center; }
+        th { background: #e2e8f0; }
+        .suspenso { background: #fee2e2; color: #991b1b; }
+        .aprobado { background: #dcfce7; color: #166534; }
+        #output {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: "Courier New", Courier, monospace;
+            padding: 1rem 2rem;
+            border-radius: .5rem;
+        }
+    </style>
 </head>
 <body>
     <h1>Boletín de notas de la clase</h1>
-    <a href="#">Notas</a> | <a href="#">Consultas</a>
-    <div>
-        <h2>Notas por trimestre</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Alumno</th>
-                    <th>1T</th>
-                    <th>2T</th>
-                    <th>3T</th>
-                    <th>Media</th>
-                    <th>Calificación</th>
-                </tr>
-            </thead>
-            <tbody id="studentsTable"></tbody>
-        </table>
-    </div>
-    <div>
-        <h2>Añadir alumno</h2>
-        <form action="#" id="studentForm">
-            <label for="name">Nombre</label> <input id="name" type="text" required>
-            <label for="t1">1T:</label><input id="t1" type="number" min="0" max="10" required>
-            <label for="t2">2T:</label><input id="t2" type="number" min="0" max="10" required>
-            <label for="t3">3T:</label><input id="t3" type="number" min="0" max="10" required>
-            <button type="submit">Añadir</button>
-        </form>
-        <button id="resetBtn">Volver a los datos iniciales</button>
-    </div>
-    <div>
-        <div>
-            <h2>Consultas</h2>
-            <button type="button" id="countPassed">Contar aprobados</button>
-            <button type="button" id="getBestGrade">Mejor nota de la clase</button>
-            <button type="button" id="avgTrimestre">Media de un trimestre</button>
-            <select name="trimestreSelect" id="trimestreSelect">
-                <option value="t1">1º Trimestre</option>
-                <option value="t2">2º Trimestre</option>
-                <option value="t3">3º Trimestre</option>
-            </select>
-            <input type="text" name="" id="">
-            <button type="button">Buscar alumno</button>
-        </div>
-        <div>
-            <h2>Resultado</h2>
-            <div id="output"></div>
-        </div>
-    </div>
+    <nav>
+        <a href="#notas">Notas</a> | <a href="#consultas">Consultas</a>
+    </nav>
+    <main>
+        <section id="notas">
+            <h2>Notas por trimestre</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Alumno</th>
+                        <th>1T</th>
+                        <th>2T</th>
+                        <th>3T</th>
+                        <th>Media</th>
+                        <th>Calificación</th>
+                    </tr>
+                </thead>
+                <tbody id="studentsTable"></tbody>
+            </table>
+        </section>
+        <section>
+            <h2>Añadir alumno</h2>
+            <form action="#" id="studentForm">
+                <label for="name">Nombre</label> <input id="name" type="text" required>
+                <label for="t1">1T:</label><input id="t1" type="number" min="0" max="10" required>
+                <label for="t2">2T:</label><input id="t2" type="number" min="0" max="10" required>
+                <label for="t3">3T:</label><input id="t3" type="number" min="0" max="10" required>
+                <button type="submit">Añadir</button>
+            </form>
+            <button type="button" id="resetBtn">Volver a los datos iniciales</button>
+        </section>
+        <section id="consultas">
+            <div>
+                <h2>Consultas</h2>
+                <button type="button" id="countPassed">Contar aprobados</button>
+                <button type="button" id="getBestGrade">Mejor nota de la clase</button>
+                <button type="button" id="avgTrimestre">Media de un trimestre</button>
+                <select name="trimestreSelect" id="trimestreSelect" aria-label="Seleccionar trimestre">
+                    <option value="t1">1º Trimestre</option>
+                    <option value="t2">2º Trimestre</option>
+                    <option value="t3">3º Trimestre</option>
+                </select>
+                <input type="text" id="findStudentName" aria-label="Nombre del alumno a buscar">
+                <button type="button" id="findStudent">Buscar alumno</button>
+            </div>
+            <div>
+                <h2>Resultado</h2>
+                <div id="output">
+                    <p>_</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script>
+// ## Configuración y datos ##
+/**
+ * Array de estudiantes por defecto
+ */
+const STUDENTS = [
+    {"name":"Ana","t1":7,"t2":8,"t3":9},
+    {"name":"Luis","t1":4,"t2":5,"t3":6},
+    {"name":"Marta","t1":3,"t2":4,"t3":2},
+    {"name":"Pablo","t1":9,"t2":10,"t3":9},
+    {"name":"Sara","t1":5,"t2":4,"t3":6},
+    {"name":"Lamin","t1":3,"t2":4,"t3":3},
+    {"name":"Joselito","t1":3,"t2":4,"t3":3},
+];
+
+/**
+ * Array de posibles relaciones entre nota y calificación
+ */
+const GRADE_THRESHOLD = [
+    { limit: 5, label: "Insuficiente" },
+    { limit: 6, label: "Suficiente" },
+    { limit: 7, label: "Bien" },
+    { limit: 9, label: "Notable" },
+    { limit: 11, label: "Sobresaliente" },
+];
+
+// ## Clase para gestionar estudiantes ##
+/**
+ * Gestor de estudiantes. Lo uso para usar encapsulación y relegar le responsabilidad
+ * del reset, el add o el getAll a esta clase en lugar de llamarlos en otras funciones
+ */
+class StudentsManager {
+    /**
+     * Los datos iniciales se guardan en initialData y luego activeData contiene initialData
+     * más todo lo que se vaya añadiendo. Eso es para poder usar luego el botón de reset.
+     * @param {*} initialData 
+     */
+    constructor(initialData) {
+        this.initialData = initialData;
+        this.activeData = structuredClone(this.initialData);
+    }
+
+    /**
+     * Incluye un estudiante dentro de activeData
+     * @param {*} student 
+     */
+    add(student) {
+        this.activeData.push(student);
+    }
+
+    /**
+     * Reinicia activeData a initialData
+     */
+    reset() {
+        this.activeData = structuredClone(this.initialData);
+    }
+
+    /**
+     * Devuelve activeData
+     * @returns 
+     */
+    getAll() {
+        return this.activeData;
+    }
+
+    /**
+     * Devuelve el número de alumnos
+     * @returns 
+     */
+    count() {
+        return this.activeData.length;
+    }
+}
+
+// Instancio studentsManager. Lo usaré para gestionar activeData, es decir, la el array activo
+// de estudiantes.
+const studentsManager = new StudentsManager(STUDENTS);
+
+// ## DOM Cache
+const tbody = document.getElementById("studentsTable");
+const studentForm = document.getElementById("studentForm");
+const resetBtn = document.getElementById("resetBtn");
+const outputField = document.getElementById("output");
+const countBtn = document.getElementById("countPassed");
+const bestGradeStudentBtn = document.getElementById("getBestGrade");
+const avgTrimestreSelect = document.getElementById("trimestreSelect");
+const avgTrimestreBtn = document.getElementById("avgTrimestre");
+const findStudentName = document.getElementById("findStudentName")
+const findStudentBtn = document.getElementById("findStudent");
+
+// ## Funciones utilitarias ##
+/**
+ * Calcula la media de notas de un alumno
+ * @param {} student 
+ * @returns 
+ */
+function getGradeAverage(student) {
+    return ((student.t1 + student.t2 + student.t3) / 3);
+}
+
+/**
+ * Función para obtener la columna "Calificación" en función de la nota media del alumno (avg)
+ * @param {*} avg 
+ * @returns 
+ */
+function getGradeLabel(avg) {
+    const grade = GRADE_THRESHOLD.find(threshold => avg < threshold.limit);
+    return grade.label;
+}
+
+/**
+ * Crea una fila de la tabla de alumnos.
+ * 
+ * @param {*} student 
+ * @returns 
+ */
+function createStudentRow(student) {
+    // Descargo el objeto alumno en estas constantes
+    const { name, t1, t2, t3 } = student;
+
+    // Calculo la media de las 3 evaluaciones
+    const avg = getGradeAverage(student);
+
+    // Genero los datos de una fila
+    const rowData = [name, t1, t2, t3, avg.toFixed(2), getGradeLabel(avg)]
+
+    // Uso createElement para crear una fila vacía
+    const tr = document.createElement("tr");
+
+    // Para cada campo en rowData (6), creo una celda con createElement
+    rowData.forEach(data => {
+        const td = document.createElement("td");
+        // Uso textContent en lugar de innerHTML
+        td.textContent = data;
+        if (Number.isInteger(data)) {
+            td.classList.add(data < 5 ? "suspenso" : "aprobado");
+        }
+        // Esto incluye la celda como hijo de la columna
+        tr.appendChild(td);
+    })
+
+    // Devuelvo la columna creada
+    return tr;
+}
+
+/**
+ * Cuenta los alumnos aprobados
+ * @returns 
+ */
+function countPass() {
+    return studentsManager.getAll().filter(s => {
+        return getGradeAverage(s) >= 5;
+    }).length;
+}
+
+/**
+ * Obtiene la mejor nota de la clase
+ */
+function getBestGradeStudent() {
+    const students = studentsManager.getAll();
+    if (!students.length) { return undefined; }
+    return students.reduce((best, current) =>
+        getGradeAverage(best) > getGradeAverage(current) ? best : current,
+        students[0]
+    );
+}
+
+/**
+ * Calcula la media de nota de un trimestre
+ */
+function getAvgTrimestre() {
+    const students = studentsManager.getAll();
+    if (!students.length) { return 0; }
+    const tri = avgTrimestreSelect.value;
+    return students.reduce((sum, current) => sum + current[tri], 0) / students.length;
+}
+
+/**
+ * Ecuentra un estudiante por su nombre
+ */
+function findStudentByName() {
+    const students = studentsManager.getAll();
+    const searchName = findStudentName.value.trim();
+    if (!searchName) { return undefined; }
+    
+    return students.find(s => s.name.toLowerCase().includes(searchName.toLowerCase()));
+}
+
+// ## Funciones principales de salida ##
+/**
+ * Añade a la tabla del html el tbody con los alumnos
+ */
+function printStudentsTbody() {
+    // Vacío el tbody con replaceChildren()
+    tbody.replaceChildren();
+    
+    // Creo un fragment html para poder contener las filas
+    const fragment = document.createDocumentFragment();
+
+    // Añado todas las filas al fragment. Esto evita meter el DOM en un bucle
+    studentsManager.getAll().forEach(student => {
+        fragment.appendChild(createStudentRow(student));
+    })
+
+    // Añado las filas del fragment a tbody
+    tbody.appendChild(fragment);
+}
+
+/**
+ * Esta función maneja la lógica que muestra filas nuevas en la página. e es el evento
+ * que pasa el navegador automáticamente cuando se llama esta función y lo necesitamos
+ * para evitar que la página recarge. Por defecto, cuando un formulario es enviado, la
+ * página recarga. Lo que hago aquí es evitar el comportamiento por defecto con preventDefault()
+ * @param {*} e 
+ */
+function processStudentForm(e) {
+    e.preventDefault();
+
+    // Creo un objeto estudiante con los valores del formulario
+    const student = {
+        name: document.getElementById("name").value.trim(),
+        t1: Number(document.getElementById("t1").value),
+        t2: Number(document.getElementById("t2").value),
+        t3: Number(document.getElementById("t3").value),
+    }
+    
+    // Añado el estudiante al activeData
+    studentsManager.add(student);
+
+    // Refresco la tabla
+    printStudentsTbody();
+
+    // Vacío el formulario
+    studentForm.reset();
+}
+
+/**
+ * Imprime en la salida los alumnos aprobados
+ */
+function outputCountPass() {
+    const pass = countPass();
+    const fail = studentsManager.getAll().length - pass;
+    
+    const passElement = document.createElement("p");
+    passElement.textContent = `Aprobados: ${pass}`;
+    
+    const failElement = document.createElement("p");
+    failElement.textContent = `Suspensos: ${fail}`;
+    
+    outputField.replaceChildren();
+    outputField.appendChild(passElement);
+    outputField.appendChild(failElement);
+}
+
+/**
+ * Imprime en la salida el alumno con mejor nota media
+ */
+function outputBestGradeStudent() {
+    const bestStudent = getBestGradeStudent();
+    if (bestStudent === undefined) {
+        const bestGradeStudentElement = document.createElement("p");
+        bestGradeStudentElement.textContent = "No hay alumnos";
+
+        outputField.replaceChildren();
+        outputField.appendChild(bestGradeStudentElement);
+        return;
+    }
+
+    const bestGradeStudentElement = document.createElement("p");
+    bestGradeStudentElement.textContent = `El mejor alumno es ${bestStudent.name.trim()}. T1: ${bestStudent.t1}, T2: ${bestStudent.t2}, T3: ${bestStudent.t3}, Final: ${getGradeAverage(bestStudent).toFixed(2)}`;
+
+    outputField.replaceChildren();
+    outputField.appendChild(bestGradeStudentElement);
+}
+
+/**
+ * Imprime la media del trimestre
+ */
+function outputAvgTrimestre() {
+    const avg = getAvgTrimestre().toFixed(2);
+
+    const avgTrimestreElement = document.createElement("p");
+    avgTrimestreElement.textContent = `La media del trimestre es ${avg}.`
+
+    outputField.replaceChildren();
+    outputField.appendChild(avgTrimestreElement);
+}
+
+/**
+ * Imprime el alumno encontrado
+ */
+function outputFindStudent() {
+    const students = studentsManager.getAll();
+    const student = findStudentByName();
+    if (student === undefined){
+        const findStudentElement = document.createElement("p");
+        findStudentElement.textContent = "No se encontró ningún alumno con ese nombre.";
+
+        outputField.replaceChildren();
+        outputField.appendChild(findStudentElement);
+        return;
+    }
+    const {name, t1, t2, t3} = student;
+
+    // Esto podría estar implementado de manera más elegante, pero me di cuenta tarde de que dar la posición en la tabla
+    const studentIndex = students.findIndex(s => s === student) + 1;
+
+    const findStudentElement = document.createElement("p");
+    findStudentElement.textContent = `${studentIndex} - ${name.trim()}. T1: ${t1}, T2: ${t2}, T3: ${t3}, Final: ${getGradeAverage(student).toFixed(2)}`;
+
+    outputField.replaceChildren();
+    outputField.appendChild(findStudentElement);
+}
+
+
+// ## Listeners ##
+studentForm.addEventListener("submit", processStudentForm);
+resetBtn.addEventListener("click", () => {
+    studentsManager.reset();
+    printStudentsTbody();
+});
+countBtn.addEventListener("click", outputCountPass);
+bestGradeStudentBtn.addEventListener("click", outputBestGradeStudent);
+avgTrimestreBtn.addEventListener("click", outputAvgTrimestre);
+findStudentBtn.addEventListener("click", outputFindStudent);
+// ## Ejecución ##
+printStudentsTbody();
+    </script>
 </body>
 </html>
