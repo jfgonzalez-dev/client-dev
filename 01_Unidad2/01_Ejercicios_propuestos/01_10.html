@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label for="rows">Filas:</label>
+    <input type="number" name="rows" id="rows">
+    <button type="button" id="generateRhombus">Generar Rombo</button>
+    <pre id="main-div"></pre>
+    <script>
+        function generateRhombus() {
+            const mainDiv = document.getElementById("main-div");
+            const rows = document.getElementById("rows");
+            const rowsValue = rows.valueAsNumber;
+
+            const rhombus = document.createDocumentFragment();
+
+            const height = rowsValue % 2 === 1 ? rowsValue : rowsValue - 1;
+            
+            let innerSpace = 0;
+            let outerSpace = (height - 1) / 2;
+
+            for (let i = 0; i < height; i++) {
+                let row = "";
+                
+                for (let j = 0; j < outerSpace; j++) {
+                    row += " ";
+                }
+                
+                if (!innerSpace) {
+                    row += "*";
+                } else {
+                    row += "*";
+                    for (let j = 0; j < innerSpace; j++) {
+                        row += " ";
+                    }
+                    row += "*";
+                }
+
+                for (let j = 0; j < outerSpace; j++) {
+                    row += " ";
+                }
+
+                const rowElement = document.createElement("code");
+                rowElement.textContent = row;
+                rhombus.appendChild(rowElement);
+                rhombus.appendChild(document.createTextNode("\n"));
+
+                if (i < (height - 1)/ 2) {
+                    if (!innerSpace) {
+                        innerSpace++;
+                    } else {
+                        innerSpace += 2;
+                    }
+        
+                    outerSpace--;
+                } else {
+                    if (innerSpace === 1) {
+                        innerSpace--;
+                    } else {
+                        innerSpace -= 2;
+                    }
+        
+                    outerSpace++;
+                }
+
+            }
+
+            mainDiv.replaceChildren();
+            mainDiv.appendChild(rhombus);
+        }
+        document.getElementById("generateRhombus").addEventListener("click", generateRhombus);
+    </script>
+</body>
+</html>
