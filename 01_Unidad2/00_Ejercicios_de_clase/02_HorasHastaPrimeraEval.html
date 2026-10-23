@@ -8,25 +8,19 @@
 <body>
     <script>
         const now = new Date();
-        const eval1 = new Date(2026,11,2);
-        const semanas = Math.round((eval1 - now) / 1000 / 60 / 60 / 24 / 7);
-        let horas = semanas * 6;
-        switch (now.getDay()) {
-            case 1:
-            case 2:
-                break;
-            case 3:
-                horas -= 2;
-                break;
-            case 4:
-            case 5:
-                horas -= 4;
-                break;
-            case 6:
-            case 0:
-                horas -= 6;
+        const eval1 = new Date(2026,10,22);
+
+        let hours = 0;
+
+        for (let i = now; i < eval1; i.setDate(i.getDate()+1)) {
+            if (
+                i.getDay() === 2 ||
+                i.getDay() === 3 ||
+                i.getDay() === 5
+            ) { hours += 2; }
         }
-        console.log(`Horas de DWECl hasta la primera evaluación: ${horas}`);
+
+        console.log(`Horas de DWECl hasta la primera evaluación: ${hours}`);
     </script>
 </body>
 </html>
