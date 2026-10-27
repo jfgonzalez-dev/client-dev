@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="reloj"></p>
+    <button id="parar">Parar</button>
+    <button id="reanudar">Reanudar</button>
+
+    <script>
+        // 1
+        const now = new Date();
+        const fecha = `${now.toLocaleDateString("es-ES", {weekday: 'long'})}, ${now.getDate()} de ${now.toLocaleDateString("es-ES", {month: 'long'})} de ${now.getFullYear()}`;
+        console.log(fecha);
+        
+        //2
+        const diasHasta = fecha => Math.ceil((fecha - Date.now()) / 86400000);
+        
+        //3
+        const reloj = document.getElementById("reloj");
+        const parar = document.getElementById("parar");
+        const reanudar = document.getElementById("reanudar");
+        
+        const updateReloj = () => reloj.textContent = new Date().toLocaleTimeString("es-ES");
+        
+        let intervaloReloj = setInterval(updateReloj, 1000);
+
+        parar.addEventListener("click", () => clearInterval(intervaloReloj));
+        reanudar.addEventListener("click", () => {intervaloReloj = setInterval(updateReloj, 1000)});
+    </script>
+</body>
+</html>
