@@ -61,8 +61,8 @@
         const verTareas = () => console.log(JSON.parse(localStorage.getItem("tareas")));
 
 
-        addTareaBtn.addEventListener("click", () => {anadirTarea(newTareaInput.value)});
-        clearBtn.addEventListener("click", localStorage.clear());
+        addTareaBtn.addEventListener("click", () => anadirTarea(newTareaInput.value));
+        clearBtn.addEventListener("click", () => localStorage.clear());
         consoleShowBtn.addEventListener("click", verTareas);
         
     </script>
