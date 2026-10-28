@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button type="button" id="cambiarTema">Cambiar Tema</button><br>
+    <hr>
+    <label for="tareaInput">Nueva Tarea</label> <input type="text" id="tareaInput"> <button type="button" id="addTarea">Añadir</button><br>
+    <button type="button" id="clear">Clear localStorage</button> <button type="button" id="consoleShow">Mostrar localStorage en consola</button>
+    <script>
+        // 1
+        // función de los apuntes
+        function leerCookie(nombre) {
+            const pares = document.cookie.split("; ");
+            for (const par of pares)  {
+                const partes = par.split("=");
+                if (partes[0] === nombre) return decodeURIComponent(partes[1]);
+            }
+            return null;
+        }
+
+        document.cookie = "idioma=es; max-age=604800; path=/";
+        
+        console.log(`Idioma: ${leerCookie("idioma")}`)
+        
+        document.cookie = "idioma=; max-age=; path=/";
+
+        console.log(`Idioma: ${leerCookie("idioma")}`)
+
+        // 2
+        const cambiarTemaBtn = document.getElementById("cambiarTema");
+
+        function cambiarTema() {
+            if (localStorage.getItem("tema") === "claro") {
+                localStorage.setItem("tema","oscuro");
+            } else {
+                localStorage.setItem("tema","claro");
+            }
+            console.log(`Cambiado a tema ${localStorage.getItem("tema")}`);
+        }
+
+        cambiarTemaBtn.addEventListener("click",cambiarTema);
+
+        console.log(`Tema: ${localStorage.getItem("tema")}`);
+
+        // 3
+        const addTareaBtn = document.getElementById("addTarea");
+        const newTareaInput = document.getElementById("tareaInput");
+        const clearBtn = document.getElementById("clear");
+        const consoleShowBtn = document.getElementById("consoleShow");
+
+        const anadirTarea = texto => {
+            let tareasItem = JSON.parse(localStorage.getItem("tareas")) || { tareas: [] };
+            tareasItem.tareas.push(texto);
+            localStorage.setItem("tareas",JSON.stringify(tareasItem));
+        };
+
+        const verTareas = () => console.log(JSON.parse(localStorage.getItem("tareas")));
+
+
+        addTareaBtn.addEventListener("click", () => {anadirTarea(newTareaInput.value)});
+        clearBtn.addEventListener("click", localStorage.clear());
+        consoleShowBtn.addEventListener("click", verTareas);
+        
+    </script>
+</body>
+</html>
