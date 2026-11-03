@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1
+        const libro = {
+            title: "El Quijote",
+            author: "Cervantes",
+            pages: 200,
+            resumen() {
+                return `${this.title}, de ${this.author} (${this.pages} páginas)`;
+            }
+        };
+
+        console.log(libro.resumen());
+        
+        // 2
+        const iva = 1.21;
+
+        class Product {
+            constructor(name,price,stock) {
+                this.name = name;
+                this.price = price;
+                this.stock = stock;
+            }
+
+            conIva() {
+                return this.price * iva;
+            }
+
+            vender(n) {
+                 if (this.stock >= n) {
+                    this.stock -= n;
+                    return true;
+                 } else return false;
+            }
+        }
+
+        // 3
+        let products = [
+            new Product("legía",20,3),
+            new Product("leche",2,5),
+            new Product("televisión",2000,1),
+            new Product("coche",20000,7),
+        ]
+
+        let inventoryValue = 0;
+
+        console.log("Productos con stock inferior a 5:")
+        for (const product of products) {
+            if (product.stock < 5) console.log(`- ${product.name}`);
+            inventoryValue += product.price * product.stock;
+        }
+
+        console.log(`Valor total del inventario: ${inventoryValue}`);
+    </script>
+</body>
+</html>
