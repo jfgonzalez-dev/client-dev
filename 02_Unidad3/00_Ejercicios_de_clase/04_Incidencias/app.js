@@ -16,6 +16,7 @@ class Incidencia {
   html() {
     let clases = "incidencia " + this.prioridad;
     if (this.resuelta) clases += "resuelta";
+    if (this.esUrgente()) clases +=" urgente";
     const hora = new Date(this.fecha).toLocaleTimeString("es-ES");
 
     let html = "<article class='" + clases + "'>";
@@ -28,6 +29,7 @@ class Incidencia {
     if (!this.resuelta) {
       html += "<button type='button' onclick='resolver(" + this.id + ")'>Resolver</button>";
     }
+    html += "<button type='button' onclick='eliminar(" + this.id + ")'>Eliminar</button>";
     html += "</article>";
     return html;
   }
@@ -35,6 +37,11 @@ class Incidencia {
   // DONE RETO 3: devuelve los minutos que han pasado desde this.fecha
   minutos() {
     return Math.floor((Date.now() - this.fecha) / 60000);
+  }
+
+  // RETO 5
+  esUrgente() {
+    return !this.resuelta && this.prioridad === "alta" && this.minutos() > 30;
   }
 }
 
@@ -78,6 +85,10 @@ function pintar() {
 
   document.getElementById("resumen").textContent = "Total: " + incidencias.length + "· Pendientes: " + incidenciasPendientes;
   // DONE RETO 2: cuenta las que NO están resueltas y muéstralo así:
+
+  let incidenciasUrgentes = incidencias.filter(i => i.esUrgente()).length;
+  
+  document.title = (incidenciasUrgentes > 0 ? `(${incidenciasUrgentes}) ` : "") + "Incidencias del aula";
 }
 
 // Muestra un mensaje que desaparece a los 2 segundos (3.2)
@@ -116,8 +127,17 @@ document.getElementById("enviar").addEventListener("click", () => {
 // DONE RETO 1: busca con un for la incidencia cuyo id coincide,
 function resolver(id) {
   for (const incidencia of incidencias) {
-    if (!incidencia.resuelta) incidencia.resuelta = true;
+    if (incidencia.id === id && !incidencia.resuelta) incidencia.resuelta = true;
   }
+  guardar();
+  pintar();
+}
+
+// DONE RETO 4
+function eliminar(id) {
+  if (window.confirm("¿Seguro que quieres eliminar esta incidencia?"))
+    for (let i = 0; i < incidencias.length; i++)
+      if (incidencias[i].id === id) incidencias.splice(i,1);
   guardar();
   pintar();
 }
@@ -128,7 +148,7 @@ function resolver(id) {
 function leerCookie(nombre) {
   const pares = document.cookie.split("; ");
   for (const par of pares) {
-    const key,value = par.split("=");
+    const [key,value] = par.split("=");
     if (key === nombre) return decodeURIComponent(value);
   }
   return null;
@@ -147,3 +167,5 @@ setInterval(() => {
 
 cargar();
 pintar();
+
+setInterval(pintar, 60000);
