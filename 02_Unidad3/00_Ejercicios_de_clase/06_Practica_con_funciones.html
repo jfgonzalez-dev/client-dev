@@ -23,15 +23,24 @@
         console.log(capitalizar("ana garcía lópez"));
 
         // 3
-        /*
-        Dos funciones recursivas
-        sumaDigitos(n) suma las cifras de un
-        número (1234 → 10). potencia(base,
-        exp) calcula la potencia sin
-        usar Math.pow.
-        Pista: n % 10 da la última cifra y
-        Math.floor(n / 10) la quita.
-        */
+        const sumaEnteros = n => {
+            n = Math.abs(Math.trunc(n));
+            if (n < 10) {
+                return n;
+            }
+            return (n % 10) + sumaEnteros(n/10);
+        };
+
+        console.log(sumaEnteros(1234));
+
+        const potencia = (base, exponente) => {
+            if (exponente === 0) return 1;
+
+            return base * potencia(base, exponente - 1);
+        };
+
+        console.log(potencia(2, 3));
+
     </script>
 </body>
 </html>
